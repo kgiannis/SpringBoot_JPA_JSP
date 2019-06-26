@@ -31,8 +31,8 @@ public class PersonRestControllerXML {
 	
 	//-------------- GET --------------//
 		
-	// USE: http://localhost:8080/xmlFind/1
-	@RequestMapping(value = {"/xmlFind/{id}"}, method=RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	// USE: http://localhost:8080/xml/person/1
+	@RequestMapping(value = {"/xml/person/{id}"}, method=RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Person> xmlFindById(@PathVariable Long id){
 		System.out.println("Inside: xfind");
 		if ( personService.findById(id) == null ){
@@ -42,22 +42,22 @@ public class PersonRestControllerXML {
 		}
 	}
 	
-	// USE: http://localhost:8080/xmlFindAll
-	@RequestMapping(value = "/xmlFindAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<List<Person>> xmlFindAll() {
-        List<Person> users = personService.findAll();
-        if(users.isEmpty()){
-            return new ResponseEntity<List<Person>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Person>>(users, HttpStatus.OK);
+	// USE: http://localhost:8080/xml/persons
+	@RequestMapping(value = "/xml/persons", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+    	public ResponseEntity<List<Person>> xmlFindAll() {
+		List<Person> users = personService.findAll();
+		if(users.isEmpty()){
+		    return new ResponseEntity<List<Person>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Person>>(users, HttpStatus.OK);
     }	
 	
 	
 	
 	//-------------- POST --------------//
 	
-	//USE: http://localhost:8080/xmlAddPerson?name=qaz&surname=wsx
-	@RequestMapping(value = {"/xmlAddPerson"}, method=RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+	//USE: http://localhost:8080/xml/person?name=qaz&surname=wsx
+	@RequestMapping(value = {"/xml/person"}, method=RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
 	public void xmlAddPersonParams(@RequestParam String name, @RequestParam String surname){
 		Person p = new Person();
 		p.setName(name);
@@ -66,8 +66,8 @@ public class PersonRestControllerXML {
 		personService.save(p);
 	}
 	
-	//USE: http://localhost:8080/xmlAddPerson/qaz/wsx
-	@RequestMapping(value = {"/xmlAddPersonVars/{name}/{surname}"}, method=RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+	//USE: http://localhost:8080/xml/person/qaz/wsx
+	@RequestMapping(value = {"/xml/person/{name}/{surname}"}, method=RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Person> xmlAddPersonVars(@PathVariable String name, @PathVariable String surname){
 		Person p = new Person();
 		p.setName(name);
