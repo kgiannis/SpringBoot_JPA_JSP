@@ -23,21 +23,21 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 	
-	@RequestMapping(value = {"/", "listPersons"})
+	@RequestMapping(value = {"/", "/persons"})
 	public String viewPersons(ModelMap model){		
 		model.addAttribute("listPersons", personService.findAll());
 		
 		return "person/listPersons";
 	}
 	
-	@RequestMapping(value = {"/addPerson"}, method=RequestMethod.GET)
+	@RequestMapping(value = {"/person"}, method=RequestMethod.GET)
 	public String addPerson(ModelMap model){
 		Person person = new Person();
 		model.addAttribute("person", person);
 		return "person/addPerson";
 	}
 	
-	@RequestMapping(value = {"/addPerson"}, method=RequestMethod.POST)
+	@RequestMapping(value = {"/person"}, method=RequestMethod.POST)
 	public String savePerson(Person person, BindingResult result){
 		if ( !result.hasErrors() ){
 			personService.save(person);
@@ -45,14 +45,14 @@ public class PersonController {
 		return "redirect:/listPersons";
 	}
 	
-	@RequestMapping(value = {"/editPerson/{personId}"}, method=RequestMethod.GET)
+	@RequestMapping(value = {"/person/{personId}"}, method=RequestMethod.GET)
 	public String editPerson(@PathVariable Long personId, ModelMap model){
 		Person person = personService.findById(personId);
 		model.addAttribute("person", person);
 		return "person/editPerson";
 	}
 	
-	@RequestMapping(value = {"/editPerson/{personId}"}, method=RequestMethod.POST)
+	@RequestMapping(value = {"/person/{personId}"}, method=RequestMethod.POST)
 	public String updatePerson(Person person, BindingResult result){
 		if ( !result.hasErrors() ){
 			personService.update(person);
@@ -60,7 +60,7 @@ public class PersonController {
 		return "redirect:/listPersons";
 	}
 	
-	@RequestMapping(value = {"/deletePerson/{personId}"}, method=RequestMethod.GET)
+	@RequestMapping(value = {"/person/{personId}"}, method=RequestMethod.DELETE)
 	public String deletePerson(@PathVariable Long personId){
 		personService.deleteById(personId);
 		return "redirect:/listPersons";
